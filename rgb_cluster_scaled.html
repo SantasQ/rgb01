@@ -25,10 +25,10 @@
       const rawData = dataDict[imageName];
       const maxSize = Math.max(...rawData.map(d => d.size));
 
-      const data = rawData.map(d => {
-        const scaledSize = 20 * d.size / maxSize;  // 最大サイズ20にスケーリング
-        return { x: d.r, y: d.g, z: d.b, style: d.color, size: scaledSize };
-      });
+     const data = rawData.map(d => {
+      const scaledSize = Math.sqrt(d.size) * 6;  // √で強調 + 6倍に拡大
+      return { x: d.r, y: d.g, z: d.b, style: d.color, size: scaledSize };
+     });
 
       new vis.Graph3d(document.getElementById("graph"), data, {
         width: '600px',

@@ -25,15 +25,20 @@
       const rawData = dataDict[imageName];
       const maxCount = Math.max(...rawData.map(d => d.raw_count));
 
-      const data = rawData.map(d => {
-        const scaledSize = Math.sqrt(d.raw_count) * 6;  // 強調サイズ
-        return { x: d.r, y: d.g, z: d.b, style: d.color, size: scaledSize };
-      });
+    const data = new vis.DataSet(rawData.map(d => {
+      return {
+       x: d.r,
+       y: d.g,
+       z: d.b,
+       size: Math.sqrt(d.raw_count) * 6,
+      style: d.color  // ← 各点ごとのカラー
+  };
+}));
 
       new vis.Graph3d(document.getElementById("graph"), data, {
         width: '600px',
         height: '600px',
-        style: 'dot-color',
+        style: 'dot',
         showPerspective: true,
         showGrid: true,
         showShadow: false,

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>RGB 3D Color Clusters</title>
+  <script src="https://unpkg.com/vis-graph3d@latest/dist/vis-graph3d.min.js"></script>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; text-align: center; }
+    #graph { width: 600px; height: 600px; margin: 30px auto; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h2>RGB 3D Scatter by Image</h2>
+  <div id="graph"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const imageName = params.get("img");
+
+    async function loadAndPlot() {
+      const response = await fetch("ColorData.csv");
+      const text = await response.text();
+      const rows = text.trim().split("\n").slice(1);
+      const data = [];
+
+      for (let row of rows) {
+        const [img, cluster, countStr, hex, r, g, b] = row.split(",");
+        if (img.trim() === imageName) {
+          const count = parseInt(countStr.replace(/,/g, ""));
+          data.push({ x: parseInt(r), y: parseInt(g), z: parseInt(b), style: hex, size: count / 100 });
+        }
+      }
+
+      const graph = new vis.Graph3d(document.getElementById("graph"), data, {
+        width: '600px',
+        height: '600px',
+        style: 'dot-color',
+        showPerspective: true,
+        showGrid: true,
+        showShadow: false,
+        keepAspectRatio: true,
+        verticalRatio: 1.0,
+        xLabel: 'Red',
+        yLabel: 'Green',
+        zLabel: 'Blue',
+        cameraPosition: { horizontal: 1.0, vertical: 0.5, distance: 1.8 }
+      });
+    }
+
+    loadAndPlot();
+  </script>
+</body>
+</html>

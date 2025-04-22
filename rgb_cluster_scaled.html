@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>RGB 3D Color Clusters</title>
+  <script src="https://unpkg.com/vis-graph3d@latest/dist/vis-graph3d.min.js"></script>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; text-align: center; }
+    #graph { width: 600px; height: 600px; margin: 30px auto; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h2>RGB 3D Scatter by Image</h2>
+  <div id="graph"></div>
+
+  <script>
+    const dataDict = {"Girl with a Pearl Earring": [{"r": 16, "g": 11, "b": 17, "color": "#100b11", "size": 67.78}, {"r": 63, "g": 76, "b": 107, "color": "#3f4c6b", "size": 1.08}, {"r": 45, "g": 34, "b": 31, "color": "#2d221f", "size": 7.46}, {"r": 88, "g": 65, "b": 48, "color": "#584130", "size": 6.56}, {"r": 153, "g": 126, "b": 93, "color": "#997e5d", "size": 2.79}, {"r": 130, "g": 94, "b": 62, "color": "#825e3e", "size": 5.5}, {"r": 114, "g": 131, "b": 178, "color": "#7283b2", "size": 1.41}, {"r": 39, "g": 45, "b": 68, "color": "#272d44", "size": 1.18}, {"r": 193, "g": 159, "b": 116, "color": "#c19f74", "size": 2.38}, {"r": 227, "g": 197, "b": 169, "color": "#e3c5a9", "size": 1.63}, {"r": 71, "g": 90, "b": 152, "color": "#475a98", "size": 1.59}, {"r": 245, "g": 242, "b": 237, "color": "#f5f2ed", "size": 0.64}], "Liberty Leading the People": [{"r": 140, "g": 133, "b": 130, "color": "#8c8582", "size": 9.07}, {"r": 61, "g": 50, "b": 42, "color": "#3d322a", "size": 17.76}, {"r": 85, "g": 75, "b": 66, "color": "#554b42", "size": 12.97}, {"r": 156, "g": 159, "b": 164, "color": "#9c9fa4", "size": 8.52}, {"r": 221, "g": 225, "b": 226, "color": "#dde1e2", "size": 5.65}, {"r": 110, "g": 102, "b": 96, "color": "#6e6660", "size": 9.29}, {"r": 186, "g": 189, "b": 193, "color": "#babdc1", "size": 5.82}, {"r": 35, "g": 30, "b": 27, "color": "#231e1b", "size": 20.49}, {"r": 46, "g": 61, "b": 88, "color": "#2e3d58", "size": 2.85}, {"r": 188, "g": 89, "b": 67, "color": "#bc5943", "size": 1.62}, {"r": 97, "g": 131, "b": 178, "color": "#6183b2", "size": 3.21}, {"r": 78, "g": 98, "b": 127, "color": "#4e627f", "size": 2.75}], "Mona Lisa": [{"r": 93, "g": 91, "b": 71, "color": "#5d5b47", "size": 6.09}, {"r": 33, "g": 23, "b": 16, "color": "#211710", "size": 23.62}, {"r": 57, "g": 46, "b": 34, "color": "#392e22", "size": 12.79}, {"r": 112, "g": 76, "b": 43, "color": "#704c2b", "size": 4.74}, {"r": 47, "g": 34, "b": 23, "color": "#2f2217", "size": 16.44}, {"r": 84, "g": 55, "b": 31, "color": "#54371f", "size": 8.07}, {"r": 151, "g": 104, "b": 59, "color": "#97683b", "size": 3.0}, {"r": 117, "g": 114, "b": 89, "color": "#757259", "size": 8.98}, {"r": 186, "g": 135, "b": 80, "color": "#ba8750", "size": 1.85}, {"r": 139, "g": 133, "b": 100, "color": "#8b8564", "size": 4.45}, {"r": 210, "g": 161, "b": 100, "color": "#d2a164", "size": 2.14}, {"r": 70, "g": 66, "b": 49, "color": "#464231", "size": 7.83}], "The Birth of Venus": [{"r": 171, "g": 129, "b": 74, "color": "#ab814a", "size": 8.34}, {"r": 218, "g": 188, "b": 135, "color": "#dabc87", "size": 6.5}, {"r": 69, "g": 61, "b": 40, "color": "#453d28", "size": 8.87}, {"r": 212, "g": 205, "b": 175, "color": "#d4cdaf", "size": 13.99}, {"r": 182, "g": 182, "b": 153, "color": "#b6b699", "size": 10.1}, {"r": 194, "g": 162, "b": 105, "color": "#c2a269", "size": 8.61}, {"r": 137, "g": 95, "b": 52, "color": "#895f34", "size": 6.7}, {"r": 96, "g": 85, "b": 59, "color": "#60553b", "size": 8.33}, {"r": 231, "g": 224, "b": 200, "color": "#e7e0c8", "size": 7.68}, {"r": 41, "g": 38, "b": 26, "color": "#29261a", "size": 8.45}, {"r": 123, "g": 118, "b": 88, "color": "#7b7658", "size": 5.56}, {"r": 147, "g": 149, "b": 121, "color": "#939579", "size": 6.87}], "The Gleaners": [{"r": 155, "g": 141, "b": 104, "color": "#9b8d68", "size": 9.87}, {"r": 24, "g": 17, "b": 27, "color": "#18111b", "size": 7.22}, {"r": 42, "g": 34, "b": 35, "color": "#2a2223", "size": 10.3}, {"r": 60, "g": 49, "b": 42, "color": "#3c312a", "size": 9.93}, {"r": 141, "g": 128, "b": 88, "color": "#8d8058", "size": 7.56}, {"r": 82, "g": 69, "b": 53, "color": "#524535", "size": 7.8}, {"r": 194, "g": 181, "b": 164, "color": "#c2b5a4", "size": 14.1}, {"r": 170, "g": 155, "b": 120, "color": "#aa9b78", "size": 4.98}, {"r": 125, "g": 109, "b": 74, "color": "#7d6d4a", "size": 5.97}, {"r": 213, "g": 197, "b": 179, "color": "#d5c5b3", "size": 11.43}, {"r": 104, "g": 88, "b": 62, "color": "#68583e", "size": 6.0}, {"r": 178, "g": 168, "b": 146, "color": "#b2a892", "size": 4.84}], "The Last Supper": [{"r": 87, "g": 70, "b": 48, "color": "#574630", "size": 13.15}, {"r": 136, "g": 133, "b": 123, "color": "#88857b", "size": 5.07}, {"r": 174, "g": 160, "b": 134, "color": "#aea086", "size": 10.07}, {"r": 47, "g": 29, "b": 14, "color": "#2f1d0e", "size": 7.9}, {"r": 162, "g": 137, "b": 108, "color": "#a2896c", "size": 7.25}, {"r": 110, "g": 101, "b": 87, "color": "#6e6557", "size": 8.36}, {"r": 70, "g": 52, "b": 31, "color": "#46341f", "size": 16.18}, {"r": 207, "g": 200, "b": 182, "color": "#cfc8b6", "size": 4.6}, {"r": 108, "g": 87, "b": 61, "color": "#6c573d", "size": 11.56}, {"r": 139, "g": 114, "b": 83, "color": "#8b7253", "size": 8.49}, {"r": 230, "g": 228, "b": 215, "color": "#e6e4d7", "size": 1.63}, {"r": 191, "g": 181, "b": 161, "color": "#bfb5a1", "size": 5.74}], "The Scream": [{"r": 197, "g": 68, "b": 14, "color": "#c5440e", "size": 6.58}, {"r": 95, "g": 79, "b": 53, "color": "#5f4f35", "size": 11.04}, {"r": 37, "g": 46, "b": 37, "color": "#252e25", "size": 12.45}, {"r": 129, "g": 101, "b": 67, "color": "#816543", "size": 8.89}, {"r": 202, "g": 121, "b": 61, "color": "#ca793d", "size": 6.98}, {"r": 82, "g": 90, "b": 79, "color": "#525a4f", "size": 6.88}, {"r": 56, "g": 64, "b": 54, "color": "#384036", "size": 12.63}, {"r": 195, "g": 94, "b": 39, "color": "#c35e27", "size": 9.04}, {"r": 16, "g": 25, "b": 18, "color": "#101912", "size": 9.5}, {"r": 193, "g": 141, "b": 84, "color": "#c18d54", "size": 6.26}, {"r": 136, "g": 123, "b": 92, "color": "#887b5c", "size": 6.92}, {"r": 198, "g": 164, "b": 109, "color": "#c6a46d", "size": 2.83}], "The Starry Night": [{"r": 56, "g": 77, "b": 131, "color": "#384d83", "size": 11.17}, {"r": 43, "g": 58, "b": 102, "color": "#2b3a66", "size": 8.32}, {"r": 29, "g": 33, "b": 33, "color": "#1d2121", "size": 15.68}, {"r": 76, "g": 101, "b": 143, "color": "#4c658f", "size": 13.55}, {"r": 158, "g": 172, "b": 159, "color": "#9eac9f", "size": 4.91}, {"r": 122, "g": 144, "b": 159, "color": "#7a909f", "size": 8.46}, {"r": 74, "g": 88, "b": 97, "color": "#4a5861", "size": 5.66}, {"r": 172, "g": 176, "b": 125, "color": "#acb07d", "size": 3.03}, {"r": 44, "g": 52, "b": 63, "color": "#2c343f", "size": 11.46}, {"r": 95, "g": 121, "b": 155, "color": "#5f799b", "size": 12.11}, {"r": 117, "g": 132, "b": 120, "color": "#758478", "size": 4.63}, {"r": 173, "g": 158, "b": 54, "color": "#ad9e36", "size": 1.02}], "Thirty-six Views of Mount Fuji": [{"r": 237, "g": 233, "b": 215, "color": "#ede9d7", "size": 15.88}, {"r": 140, "g": 167, "b": 175, "color": "#8ca7af", "size": 8.75}, {"r": 152, "g": 150, "b": 141, "color": "#98968d", "size": 8.22}, {"r": 227, "g": 200, "b": 166, "color": "#e3c8a6", "size": 21.52}, {"r": 192, "g": 199, "b": 193, "color": "#c0c7c1", "size": 8.51}, {"r": 53, "g": 69, "b": 102, "color": "#354566", "size": 6.7}, {"r": 19, "g": 29, "b": 72, "color": "#131d48", "size": 7.47}, {"r": 55, "g": 57, "b": 54, "color": "#373936", "size": 2.73}, {"r": 98, "g": 97, "b": 90, "color": "#62615a", "size": 3.02}, {"r": 181, "g": 174, "b": 158, "color": "#b5ae9e", "size": 7.8}, {"r": 97, "g": 118, "b": 137, "color": "#617689", "size": 5.44}, {"r": 135, "g": 130, "b": 114, "color": "#878272", "size": 3.96}], "Woman with a Parasol": [{"r": 131, "g": 136, "b": 138, "color": "#83888a", "size": 8.08}, {"r": 110, "g": 110, "b": 69, "color": "#6e6e45", "size": 6.5}, {"r": 190, "g": 187, "b": 178, "color": "#bebbb2", "size": 7.37}, {"r": 96, "g": 103, "b": 101, "color": "#606765", "size": 5.52}, {"r": 117, "g": 143, "b": 168, "color": "#758fa8", "size": 9.73}, {"r": 128, "g": 128, "b": 103, "color": "#808067", "size": 4.21}, {"r": 76, "g": 85, "b": 64, "color": "#4c5540", "size": 11.31}, {"r": 161, "g": 161, "b": 157, "color": "#a1a19d", "size": 10.99}, {"r": 97, "g": 118, "b": 139, "color": "#61768b", "size": 10.84}, {"r": 95, "g": 99, "b": 46, "color": "#5f632e", "size": 5.77}, {"r": 145, "g": 166, "b": 182, "color": "#91a6b6", "size": 12.08}, {"r": 52, "g": 65, "b": 49, "color": "#344131", "size": 7.6}]};
+
+    const params = new URLSearchParams(window.location.search);
+    const imageName = params.get("img");
+
+    if (!dataDict[imageName]) {
+      document.getElementById("graph").innerHTML = "<p>データが見つかりません: " + imageName + "</p>";
+    } else {
+      const rawData = dataDict[imageName];
+      const maxSize = Math.max(...rawData.map(d => d.size));
+
+      const data = rawData.map(d => {
+        const scaledSize = 20 * d.size / maxSize;  // 最大サイズ20にスケーリング
+        return { x: d.r, y: d.g, z: d.b, style: d.color, size: scaledSize };
+      });
+
+      new vis.Graph3d(document.getElementById("graph"), data, {
+        width: '600px',
+        height: '600px',
+        style: 'dot-color',
+        showPerspective: true,
+        showGrid: true,
+        showShadow: false,
+        keepAspectRatio: true,
+        verticalRatio: 1.0,
+        xLabel: 'Red',
+        yLabel: 'Green',
+        zLabel: 'Blue',
+        cameraPosition: { horizontal: 1.0, vertical: 0.5, distance: 1.8 }
+      });
+    }
+  </script>
+</body>
+</html>
